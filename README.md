@@ -23,8 +23,8 @@ pip install -r requirements.txt
 
 ## Configure and run the app
 
-You will need to edit two files.  The commands.txt and hosts.txt files.
-The commands.txt file is where you define the commands.  You enter them
+You will need to edit two files.  The sshCmds.txt and hosts.txt files.
+The sshCmds.txt file is where you define the commands.  You enter them
 in the file like you would in a putty or a terminal. The hosts.txt file
 is where you enter the hosts.  One host per line.  No leading or
 trailing white space.
