@@ -1,7 +1,7 @@
 # bulkSshRunner
 A python program to config large amounts of devices at once and creates a log.
 
-## Monitor windows servers and processes
+## Runs SSH commands on a list of hosts from a file and creates a txt report
 
 This was program created to config a bunch of devices/systems at once.  
 It uses SSH and is not device specific.  It does give you a txt log
