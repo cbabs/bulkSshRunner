@@ -33,7 +33,7 @@ Once you have edited the txt files, you can run the program.
 Depending on you python setup changes how you run the program.  
 Open powershell or a terminal window.  Go to the directory where the file is.  
 Then run the command to have python execute the py file and make sure the
-hosts.txt is present.  I have python installed in c:\python36\ so for me it would look
+hosts.txt is present.  I have python installed in c:\python36\ so for me:
 
 c:\tools\monitor>c:\python36\python.exe bulkSshRunner.py
 
