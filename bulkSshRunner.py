@@ -18,12 +18,19 @@ if not cmdsList[0]: raise("No commands in sshCmds.txt file or unable to read")
 def getCreds():
 
     while True:
-        sshUser = input('Enter username: ')
+        sshUser = input('\n\nEnter username: ')
         sshPass = getpass.getpass('Enter password: ')
+        devType = input('''Device Type? (Enter "?" for list.  Hit enter for generic termserver)
+SSH Device Type: ''')
+        
+        
+        if devType == '': devType = 'generic_termserver'
+        if devType == '?': devType = ''
         
 
+        
         sshConf = {
-        'device_type': 'generic_termserver',
+        'device_type': devType,
         'ip': hostList[0],
         'username': sshUser,
         'password': sshPass}
@@ -33,7 +40,8 @@ def getCreds():
         try:
             netmiko.ConnectHandler(**sshConf)
             print("Login success")
-            return {'uid': sshUser, 'password': sshPass}
+            return {'uid': sshUser, 'password': sshPass, 
+                    'devType': devType}
             break
     
         except Exception as e:
@@ -42,7 +50,7 @@ def getCreds():
         else:
             print('Access denied')
     
-def runCommands(uid, password):
+def runCommands(uid, password, devType):
     
     # Log File
     f = open("sshLog-{}.txt".format(timestamp), "a")
@@ -50,19 +58,19 @@ def runCommands(uid, password):
     for host in hostList:
         
         sshConf = {
-            'device_type': 'generic_termserver',
+            'device_type': devType,
             'ip': host,
             'username': uid,
             'password': password}
         
+        
         net_connect = netmiko.ConnectHandler(**sshConf)
         
-        f.write("\n" + host)
+        f.write("\n" + host)     
+            
+        sshOutput = net_connect.send_config_set(cmdsList)
+        f.write(sshOutput)
         
-        for cmd in cmdsList:
-            print(cmd)
-            sshOutput = net_connect.send_command(cmd)
-            f.write(sshOutput)
         f.write("\n")
     
     f.close()
@@ -73,7 +81,8 @@ def main():
     
     credsDict = getCreds()
     
-    runCommands(credsDict['uid'], credsDict['password'])
+    runCommands(credsDict['uid'], credsDict['password'],
+                 credsDict["devType"])
     
      
 
